@@ -6,7 +6,7 @@ import controller.ControllerAccount;
 import entity.Account;
 
 public class Main {
-	public static final Scanner s = new Scanner("");
+	public static final Scanner s = new Scanner(System.in);
 	private IControllerAccount controllerAcc = ControllerAccount.instanciar();
 	
 	public static void main(String[] args) {
@@ -27,7 +27,7 @@ public class Main {
 		try{
 			controllerAcc.validate(acc);
 		} catch (Exception e) {
-			System.out.println("Erro:" + e.getMessage());
+			System.out.println("Erro: " + e.getMessage());
 		}
 	}
 }

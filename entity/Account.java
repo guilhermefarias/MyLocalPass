@@ -19,9 +19,7 @@ public class Account {
 		return description;
 	}
 	
-	public Account(String name, String login, String password,
-			String description) {
-		super();
+	public Account(String name, String login, String password, String description) {
 		this.name = name;
 		this.login = login;
 		this.password = password;
