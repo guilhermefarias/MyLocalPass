@@ -1,7 +1,12 @@
 package dataAcess;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import entity.Account;
+import exceptions.ExceptionAccountNotAdd;
 
 public class RepositoryAccountFile implements IRepositoryAccount {
 	//singleton inicio
@@ -31,10 +36,32 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 		}
 	}
 	
-	public void addAccount(Account acc){
-
+	public void addAccount(Account acc) throws ExceptionAccountNotAdd {
+		IRepositoryAccount repository = new RepositoryAccountFile();
+		String directoryAcc = "." + File.separator + "senhas";
+		String filename = acc.getName();
+		String filepath = directoryAcc + File.separator + filename + ".dat";
+		//repository.findFile(filename);
+		
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		try {
+			fos = new FileOutputStream(filepath);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(acc);
+			
+		} catch (Exception e){
+			throw new ExceptionAccountNotAdd("Conta não foi adicionada");
+		} finally {
+			try {
+				oos.close();
+			} catch (Exception e) {}
+			try {
+				fos.close();
+			} catch (Exception e) {}			
+		}		
 	}
 	public void deleteAccount(){
-		
+		//deletarConta
 	}
 }

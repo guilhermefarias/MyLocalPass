@@ -4,6 +4,7 @@ import dataAcess.RepositoryAccountFile;
 import dataAcess.IRepositoryAccount;
 import entity.Account;
 import exceptions.ValidateException;
+import exceptions.ExceptionAccountNotAdd;
 
 public class ControllerAccount implements IControllerAccount {
 	private IRepositoryAccount repository = RepositoryAccountFile.instanciar();
@@ -23,7 +24,7 @@ public class ControllerAccount implements IControllerAccount {
 	
 	
 	//metodos da classe
-	public void validate (Account acc) throws ValidateException {
+	public void validate (Account acc) throws ValidateException, ExceptionAccountNotAdd {
 		if(acc == null){
 			throw new ValidateException("A conta nao pode ser nula");
 		}	

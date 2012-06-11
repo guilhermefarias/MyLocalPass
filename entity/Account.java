@@ -1,6 +1,8 @@
 package entity;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable{
 	String name;
 	String login;
 	String password;
