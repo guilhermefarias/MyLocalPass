@@ -21,18 +21,21 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 	}
 	//singleton fim
 	
-	public void findFile(String filename){
+	public void findFile(String filename) throws ExceptionAccountNotAdd {
 		String directoryAcc = "." + File.separator + "senhas";
 		File directory = new File(directoryAcc);
-		String[] files = directory.list();
-	
-		if(files != null && files.length > 0){
-			for(int i=0; i < files.length; i++){
-				if(files[i].equalsIgnoreCase(filename)){
-					//arquivo encontrado;
+		if(directory.exists()){
+			String[] files = directory.list();
+			
+			if(files != null && files.length > 0){
+				for(int i=0; i < files.length; i++){
+					if(files[i].equalsIgnoreCase(filename)){
+					}
 				}
+				throw new ExceptionAccountNotAdd("Arquivo não encontrado");
 			}
-			//arquivo nao encontrado
+		} else {
+			throw new ExceptionAccountNotAdd("O diretorio não existe");
 		}
 	}
 	
@@ -41,17 +44,15 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 		String directoryAcc = "." + File.separator + "senhas";
 		String filename = acc.getName();
 		String filepath = directoryAcc + File.separator + filename + ".dat";
-		//repository.findFile(filename);
-		
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
+			repository.findFile(filename);
 			fos = new FileOutputStream(filepath);
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(acc);
-			
 		} catch (Exception e){
-			throw new ExceptionAccountNotAdd("Conta não foi adicionada");
+			throw new ExceptionAccountNotAdd("Conta não foi adicionada" + e.getMessage());
 		} finally {
 			try {
 				oos.close();
