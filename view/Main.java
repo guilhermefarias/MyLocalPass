@@ -1,13 +1,15 @@
 package view;
 
 import java.util.Scanner;
+import controller.IControllerAccount;
+import controller.ControllerAccount;
 import entity.Account;
 
 public class Main {
 	public static final Scanner s = new Scanner("");
+	private IControllerAccount controllerAcc = ControllerAccount.instanciar();
 	
 	public static void main(String[] args) {
-		
 		Main v = new Main();
 		v.viewAdd();
 	}
@@ -18,8 +20,14 @@ public class Main {
 		String login = s.next();
 		System.out.println("Digite o password da conta:");
 		String password = s.next();
-		System.out.println("Digite o description conta:");
+		System.out.println("Digite a descrição da conta:");
 		String description = s.next();
 		Account acc = new Account(name, login, password, description);
+
+		try{
+			controllerAcc.validate(acc);
+		} catch (Exception e) {
+			System.out.println("Erro:" + e.getMessage());
+		}
 	}
 }
