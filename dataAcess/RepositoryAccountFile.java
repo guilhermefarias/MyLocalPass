@@ -70,20 +70,6 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 		}
 	}
 	
-	public void deleteAccount(String filename){
-		IRepositoryAccount repository = new RepositoryAccountFile();
-		String directoryAcc = "." + File.separator + "senhas";
-		String filepath = directoryAcc + File.separator + filename + ".pass";
-		File directoryFile = new File(filepath);
-		if(repository.findFile(filename)){
-			if(directoryFile.delete()){
-				System.out.println("Conta removida com sucesso!");
-			} else {
-				System.out.println("Conta não foi removida com sucesso!");
-			}
-		}
-	}
-	
 	public Account viewAccount(String filename) throws ExceptionAccountNotAdd {
 		IRepositoryAccount repository = new RepositoryAccountFile();
 		String directoryAcc = "." + File.separator + "senhas";
@@ -108,6 +94,36 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 			}
 		} else {
 			throw new ExceptionAccountNotAdd("Conta não existe");
+		}
+	}
+	
+	public String[] listAccount() throws ExceptionAccountNotAdd {
+		String directoryAcc = "." + File.separator + "senhas";
+		File directory = new File(directoryAcc);
+		
+		if(directory.exists()){
+			String[] files = directory.list();
+			if(files != null && files.length > 0){
+				return files;
+			} else {
+				throw new ExceptionAccountNotAdd("Nenhuma conta foi encontrada");
+			}
+		} else {
+			throw new ExceptionAccountNotAdd("Diretorio não existe");
+		}
+	}
+	
+	public void deleteAccount(String filename){
+		IRepositoryAccount repository = new RepositoryAccountFile();
+		String directoryAcc = "." + File.separator + "senhas";
+		String filepath = directoryAcc + File.separator + filename + ".pass";
+		File directoryFile = new File(filepath);
+		if(repository.findFile(filename)){
+			if(directoryFile.delete()){
+				System.out.println("Conta removida com sucesso!");
+			} else {
+				System.out.println("Conta não foi removida com sucesso!");
+			}
 		}
 	}
 }
