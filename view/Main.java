@@ -17,13 +17,15 @@ public class Main {
 		int option = 10;
 		while(option != 0){
 			System.out.println("O que você deseja fazer?");
-			System.out.println("1 - Adicionar senha / 2 - Buscar senha / 3 - Remover senha / 0 - Sair");
+			System.out.println("1 - Adicionar senha / 2 - Buscar senha / 3 - Listar senhas / 4 - Remover senha / 0 - Sair");
 			option = s.nextInt();
 			if(option == 1){
 				v.viewAdd();
 			} else if(option == 2){
 				v.viewShow();
 			} else if(option == 3){
+				v.viewList();
+			} else if(option == 4){
 				v.viewDelete();
 			}
 		}
@@ -65,6 +67,16 @@ public class Main {
 		}
 	}
 	
+	private void viewList(){
+		try{
+			String[] accounts = repository.listAccount();
+			for(int i=0; i < accounts.length; i++){
+				System.out.println(accounts[i]);
+			}
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
 	private void viewDelete(){
 		System.out.println("Digite o nome da conta que você deseja remover:");
 		String name = s.next();
