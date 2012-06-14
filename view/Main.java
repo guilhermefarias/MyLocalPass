@@ -11,7 +11,15 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Main v = new Main();
-		v.viewAdd();
+		int option = 10;
+		while(option != 0){
+			System.out.println("O que você deseja fazer?");
+			System.out.println("1 - Adicionar senha / 0 - Sair");
+			option = s.nextInt();
+			if(option == 1){
+				v.viewAdd();
+			}
+		}
 	}
 	private void viewAdd(){
 		System.out.println("Digite o nome da conta:");
