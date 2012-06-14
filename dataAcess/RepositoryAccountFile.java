@@ -69,6 +69,7 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 			}
 		}
 	}
+	
 	public void deleteAccount(String filename){
 		IRepositoryAccount repository = new RepositoryAccountFile();
 		String directoryAcc = "." + File.separator + "senhas";
@@ -80,6 +81,33 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 			} else {
 				System.out.println("Conta não foi removida com sucesso!");
 			}
+		}
+	}
+	
+	public Account viewAccount(String filename) throws ExceptionAccountNotAdd {
+		IRepositoryAccount repository = new RepositoryAccountFile();
+		String directoryAcc = "." + File.separator + "senhas";
+		String filepath = directoryAcc + filename + ".pass";
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		if(repository.findFile(filename)){
+			try {
+				fis = new FileInputStream(filepath);
+				ois = new ObjectInputStream(fis);
+				Account acc = (Account)ois.readObject();
+				return acc;
+			} catch (Exception e){
+				throw new ExceptionAccountNotAdd("Erro ao tentar acessar a aconta. " + e.getMessage());
+			} finally {
+				try {
+					ois.close();
+				} catch (Exception e) {}
+				try {
+					fis.close();
+				} catch (Exception e) {}			
+			}
+		} else {
+			throw new ExceptionAccountNotAdd("Conta não existe");
 		}
 	}
 }
