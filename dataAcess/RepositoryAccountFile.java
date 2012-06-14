@@ -21,46 +21,53 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 	}
 	//singleton fim
 	
-	public void findFile(String filename) throws ExceptionAccountNotAdd {
+	public boolean findFile(String filename){
 		String directoryAcc = "." + File.separator + "senhas";
 		File directory = new File(directoryAcc);
+		filename = filename + ".pass";
+		
 		if(directory.exists()){
 			String[] files = directory.list();
-			
 			if(files != null && files.length > 0){
 				for(int i=0; i < files.length; i++){
 					if(files[i].equalsIgnoreCase(filename)){
+						return true;
 					}
 				}
-				throw new ExceptionAccountNotAdd("Arquivo não encontrado");
+				return false;
 			}
 		} else {
-			throw new ExceptionAccountNotAdd("O diretorio não existe");
+			directory.mkdir();
 		}
+		return false;
 	}
 	
 	public void addAccount(Account acc) throws ExceptionAccountNotAdd {
 		IRepositoryAccount repository = new RepositoryAccountFile();
 		String directoryAcc = "." + File.separator + "senhas";
 		String filename = acc.getName();
-		String filepath = directoryAcc + File.separator + filename + ".dat";
+		String filepath = directoryAcc + File.separator + filename + ".pass";
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
-		try {
-			repository.findFile(filename);
-			fos = new FileOutputStream(filepath);
-			oos = new ObjectOutputStream(fos);
-			oos.writeObject(acc);
-		} catch (Exception e){
-			throw new ExceptionAccountNotAdd("Conta não foi adicionada" + e.getMessage());
-		} finally {
+		if(repository.findFile(filename)){
+			throw new ExceptionAccountNotAdd("A conta já existe");
+		} else {
 			try {
-				oos.close();
-			} catch (Exception e) {}
-			try {
-				fos.close();
-			} catch (Exception e) {}			
-		}		
+				fos = new FileOutputStream(filepath);
+				oos = new ObjectOutputStream(fos);
+				oos.writeObject(acc);
+				System.out.println("Conta adicionada com sucesso!");
+			} catch (Exception e){
+				throw new ExceptionAccountNotAdd("Conta não foi adicionada" + e.getMessage());
+			} finally {
+				try {
+					oos.close();
+				} catch (Exception e) {}
+				try {
+					fos.close();
+				} catch (Exception e) {}			
+			}
+		}
 	}
 	public void deleteAccount(){
 		//deletarConta
