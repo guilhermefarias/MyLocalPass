@@ -69,7 +69,17 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 			}
 		}
 	}
-	public void deleteAccount(){
-		//deletarConta
+	public void deleteAccount(String filename){
+		IRepositoryAccount repository = new RepositoryAccountFile();
+		String directoryAcc = "." + File.separator + "senhas";
+		String filepath = directoryAcc + File.separator + filename + ".pass";
+		File directoryFile = new File(filepath);
+		if(repository.findFile(filename)){
+			if(directoryFile.delete()){
+				System.out.println("Conta removida com sucesso!");
+			} else {
+				System.out.println("Conta não foi removida com sucesso!");
+			}
+		}
 	}
 }
