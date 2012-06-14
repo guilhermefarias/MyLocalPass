@@ -17,11 +17,13 @@ public class Main {
 		int option = 10;
 		while(option != 0){
 			System.out.println("O que você deseja fazer?");
-			System.out.println("1 - Adicionar senha / 2 - Remover senha / 0 - Sair");
+			System.out.println("1 - Adicionar senha / 2 - Buscar senha / 3 - Remover senha / 0 - Sair");
 			option = s.nextInt();
 			if(option == 1){
 				v.viewAdd();
 			} else if(option == 2){
+				v.viewShow();
+			} else if(option == 3){
 				v.viewDelete();
 			}
 		}
@@ -39,6 +41,25 @@ public class Main {
 
 		try{
 			controllerAcc.validate(acc);
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+	
+	private void viewShow(){
+		System.out.println("Digite o nome da conta que você deseja buscar:");
+		String name = s.next();
+		Account acc;
+		try{
+			acc = repository.viewAccount(name);
+			System.out.println("");
+			System.out.println("-------------------------------------------------------------");
+			System.out.println(acc.getName());
+			System.out.println("Login: " + acc.getLogin());
+			System.out.println("Senha: " + acc.getPassword());
+			System.out.println("Descrição: " + acc.getDescription());
+			System.out.println("-------------------------------------------------------------");
+			System.out.println("");
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}

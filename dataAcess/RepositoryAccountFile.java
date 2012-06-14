@@ -87,7 +87,7 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 	public Account viewAccount(String filename) throws ExceptionAccountNotAdd {
 		IRepositoryAccount repository = new RepositoryAccountFile();
 		String directoryAcc = "." + File.separator + "senhas";
-		String filepath = directoryAcc + filename + ".pass";
+		String filepath = directoryAcc + File.separator + filename + ".pass";
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		if(repository.findFile(filename)){
