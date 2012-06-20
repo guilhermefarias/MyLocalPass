@@ -30,4 +30,15 @@ public class ControllerAccount implements IControllerAccount {
 		}	
 		repository.addAccount(acc);
 	}
+	public Account viewAccount (String nome) throws ValidateException, ExceptionAccountNotAdd {
+		Account acc = repository.viewAccount(nome);
+		return acc;
+	}
+	public String[] listAccount () throws ValidateException, ExceptionAccountNotAdd {
+		String[] accounts = repository.listAccount();
+		return accounts;
+	}
+	public void deleteAccount (String nome) throws ValidateException, ExceptionAccountNotAdd {
+		repository.deleteAccount(nome);
+	}
 }

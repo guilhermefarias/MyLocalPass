@@ -13,6 +13,11 @@ public class Main {
 	private IRepositoryAccount repository = RepositoryAccountFile.instanciar();
 	
 	public static void main(String[] args) {
+		//verificar se existe senha master
+		//se tiver, pede para autenticar
+		//se nao, pede para cadastrar
+		
+		//depois de cadastrado e autenticado, continuar a execucao normalmente
 		Main v = new Main();
 		int option = 10;
 		while(option != 0){
@@ -35,7 +40,7 @@ public class Main {
 		String name = s.next();
 		System.out.println("Digite o login da conta:");
 		String login = s.next();
-		System.out.println("Digite o password da conta:");
+		System.out.println("Digite a senha da conta:");
 		String password = s.next();
 		System.out.println("Digite a descrição da conta:");
 		String description = s.next();
@@ -53,7 +58,7 @@ public class Main {
 		String name = s.next();
 		Account acc;
 		try{
-			acc = repository.viewAccount(name);
+			acc = controllerAcc.viewAccount(name);
 			System.out.println("");
 			System.out.println("-------------------------------------------------------------");
 			System.out.println(acc.getName());
@@ -69,7 +74,7 @@ public class Main {
 	
 	private void viewList(){
 		try{
-			String[] accounts = repository.listAccount();
+			String[] accounts = controllerAcc.listAccount();
 			for(int i=0; i < accounts.length; i++){
 				System.out.println(accounts[i]);
 			}
@@ -81,7 +86,7 @@ public class Main {
 		System.out.println("Digite o nome da conta que você deseja remover:");
 		String name = s.next();
 		try{
-			repository.deleteAccount(name);
+			controllerAcc.deleteAccount(name);
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
