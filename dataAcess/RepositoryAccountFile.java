@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import entity.Account;
 import exceptions.ExceptionAccountNotAdd;
+import exceptions.ExceptionAccountExist;
 
 public class RepositoryAccountFile implements IRepositoryAccount {
 	//singleton inicio
@@ -42,7 +43,7 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 		return false;
 	}
 	
-	public void addAccount(Account acc) throws ExceptionAccountNotAdd {
+	public void addAccount(Account acc) throws ExceptionAccountNotAdd, ExceptionAccountExist {
 		IRepositoryAccount repository = new RepositoryAccountFile();
 		String directoryAcc = "." + File.separator + "senhas";
 		String filename = acc.getName();
@@ -50,7 +51,7 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if(repository.findFile(filename)){
-			throw new ExceptionAccountNotAdd("A conta já existe");
+			throw new ExceptionAccountExist("A conta já existe");
 		} else {
 			try {
 				fos = new FileOutputStream(filepath);
@@ -70,7 +71,7 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 		}
 	}
 	
-	public Account viewAccount(String filename) throws ExceptionAccountNotAdd {
+	public Account viewAccount(String filename) throws ExceptionAccountNotAdd, ExceptionAccountExist {
 		IRepositoryAccount repository = new RepositoryAccountFile();
 		String directoryAcc = "." + File.separator + "senhas";
 		String filepath = directoryAcc + File.separator + filename + ".pass";
@@ -93,11 +94,11 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 				} catch (Exception e) {}			
 			}
 		} else {
-			throw new ExceptionAccountNotAdd("Conta não existe");
+			throw new ExceptionAccountExist("Conta não existe");
 		}
 	}
 	
-	public String[] listAccount() throws ExceptionAccountNotAdd {
+	public String[] listAccount() throws ExceptionAccountExist {
 		String directoryAcc = "." + File.separator + "senhas";
 		File directory = new File(directoryAcc);
 		
@@ -106,10 +107,10 @@ public class RepositoryAccountFile implements IRepositoryAccount {
 			if(files != null && files.length > 0){
 				return files;
 			} else {
-				throw new ExceptionAccountNotAdd("Nenhuma conta foi encontrada");
+				throw new ExceptionAccountExist("Nenhuma conta foi encontrada");
 			}
 		} else {
-			throw new ExceptionAccountNotAdd("Diretorio não existe");
+			throw new ExceptionAccountExist("Diretorio não existe");
 		}
 	}
 	

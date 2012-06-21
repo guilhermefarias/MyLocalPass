@@ -5,6 +5,7 @@ import dataAcess.IRepositoryAccount;
 import entity.Account;
 import exceptions.ValidateException;
 import exceptions.ExceptionAccountNotAdd;
+import exceptions.ExceptionAccountExist;
 
 public class ControllerAccount implements IControllerAccount {
 	private IRepositoryAccount repository = RepositoryAccountFile.instanciar();
@@ -24,27 +25,27 @@ public class ControllerAccount implements IControllerAccount {
 	
 	
 	//metodos da classe
-	public boolean validate(Account acc) throws ValidateException, ExceptionAccountNotAdd {
+	public boolean validate(Account acc) throws ValidateException {
 		if(acc == null){
 			throw new ValidateException("A conta nao pode ser nula");
 		}	
 		return true;
 	}
-	public void add(Account acc) throws ValidateException, ExceptionAccountNotAdd {
+	public void add(Account acc) throws ValidateException, ExceptionAccountNotAdd, ExceptionAccountExist {
 		boolean validado = validate(acc);
 		if (validado){
 			repository.addAccount(acc);
 		}
 	}
-	public Account show(String nome) throws ValidateException, ExceptionAccountNotAdd {
+	public Account show(String nome) throws ExceptionAccountNotAdd, ExceptionAccountExist {
 		Account acc = repository.viewAccount(nome);
 		return acc;
 	}
-	public String[] list() throws ValidateException, ExceptionAccountNotAdd {
+	public String[] list() throws ExceptionAccountExist {
 		String[] accounts = repository.listAccount();
 		return accounts;
 	}
-	public void delete(String nome) throws ValidateException, ExceptionAccountNotAdd {
+	public void delete(String nome) throws ExceptionAccountExist {
 		repository.deleteAccount(nome);
 	}
 }
