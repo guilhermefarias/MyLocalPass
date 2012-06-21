@@ -32,8 +32,10 @@ public class Main {
 				v.viewList();
 			} else if(option == 4){
 				v.viewDelete();
-			}
+			}	
 		}
+		System.out.println("-------------------------------------------------------------");
+		System.out.println("Aplicação encerrada.");
 	}
 	private void viewAdd(){
 		System.out.println("Digite o nome da conta:");
@@ -47,7 +49,7 @@ public class Main {
 		Account acc = new Account(name, login, password, description);
 
 		try{
-			controllerAcc.validate(acc);
+			controllerAcc.add(acc);
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
@@ -58,7 +60,7 @@ public class Main {
 		String name = s.next();
 		Account acc;
 		try{
-			acc = controllerAcc.viewAccount(name);
+			acc = controllerAcc.show(name);
 			System.out.println("");
 			System.out.println("-------------------------------------------------------------");
 			System.out.println(acc.getName());
@@ -74,7 +76,7 @@ public class Main {
 	
 	private void viewList(){
 		try{
-			String[] accounts = controllerAcc.listAccount();
+			String[] accounts = controllerAcc.list();
 			for(int i=0; i < accounts.length; i++){
 				System.out.println(accounts[i]);
 			}
@@ -86,7 +88,7 @@ public class Main {
 		System.out.println("Digite o nome da conta que você deseja remover:");
 		String name = s.next();
 		try{
-			controllerAcc.deleteAccount(name);
+			controllerAcc.delete(name);
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}

@@ -5,8 +5,9 @@ import exceptions.ValidateException;
 import exceptions.ExceptionAccountNotAdd;
 
 public interface IControllerAccount {
-	void validate (Account acc) throws ValidateException, ExceptionAccountNotAdd;
-	Account viewAccount (String nome) throws ValidateException, ExceptionAccountNotAdd;
-	String[] listAccount() throws ValidateException, ExceptionAccountNotAdd;
-	void deleteAccount (String nome) throws ValidateException, ExceptionAccountNotAdd;
+	boolean validate (Account acc) throws ValidateException, ExceptionAccountNotAdd;
+	void add (Account acc) throws ValidateException, ExceptionAccountNotAdd;
+	Account show (String nome) throws ValidateException, ExceptionAccountNotAdd;
+	String[] list() throws ValidateException, ExceptionAccountNotAdd;
+	void delete (String nome) throws ValidateException, ExceptionAccountNotAdd;
 }
